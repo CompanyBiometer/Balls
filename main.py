@@ -15,21 +15,26 @@ class Vec:
 
 
 class Ball:
-    def __init__(self, source: str, position: Vec = Vec(0, 0), direction: Vec = Vec(4, 4)):
+    def __init__(self, source: str, position: pyray.Vector2 = pyray.Vector2(0, 0),
+                 direction: pyray.Vector2 = None,
+                 radius: int = 30):
         img = pyray.load_image(source)
         self.texture = pyray.load_texture_from_image(img)
-        self.texture.width = 30
-        self.texture.height = 30
+        self.texture.width = radius
+        self.texture.height = radius
         self.direction = direction
+        if direction is None:
+            self.direction = pyray.Vector2(4, 4)
         self.position = position
+        self.radius = radius
         pyray.unload_image(img)
 
-    def draw(self, v: Vec = None):
+    def draw(self, v: pyray.Vector2 = None):
         if v is None:
             v = self.position
-        pyray.draw_texture(self.texture, v.block_x(), v.block_y(), colors.WHITE)
+        pyray.draw_texture(self.texture, int(v.x), int(v.y), colors.WHITE)
 
-    def move(self, ):
+    def move(self):
         self.position.x += self.direction.x
         self.position.y += self.direction.y
         if self.position.x <= 0:
