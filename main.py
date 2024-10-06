@@ -75,20 +75,11 @@ def main():
     pyray.init_window(800, 600, "Task-1")
     pyray.set_target_fps(60)
     ball = Ball('basketball.png')
-    platform = Platform()
     while not pyray.window_should_close():
-
-        if pyray.is_key_down(pyray.KeyboardKey.KEY_D):
-            platform.add(1)
-        if pyray.is_key_down(pyray.KeyboardKey.KEY_A):
-            platform.add(-1)
-        platform.tick()
-
         pyray.begin_drawing()
         pyray.clear_background(colors.BLACK)
         ball.move()
         ball.draw()
-        platform.draw()
         pyray.end_drawing()
     pyray.close_window()
 
