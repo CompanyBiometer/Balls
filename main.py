@@ -35,6 +35,12 @@ class Ball:
             self.direction.y *= -1
 
 
+def check_collision(ball1: Ball, ball2: Ball) -> bool:
+    center1 = pyray.Vector2(ball1.position.x, ball1.position.y)
+    center2 = pyray.Vector2(ball2.position.x, ball2.position.y)
+    return pyray.check_collision_circles(center1, ball1.radius, center2, ball2.radius)
+
+
 class Platform:
     def __init__(self, position: pyray.Vector2 = pyray.Vector2(500, 500)):
         self.position = position
