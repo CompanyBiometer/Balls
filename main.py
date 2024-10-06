@@ -73,17 +73,28 @@ class Platform:
         if self.position.x <= 0:
             self.position.x = 0
             self.u.x *= -.7
-        if self.position.x >= 600:
-            self.position.x = 600
+        if self.position.x >= 800:
+            self.position.x = 800
             self.u.x *= -.7
+
+        for ball in balls:
+            if self.check_collision(ball):
+                ball.direction.x *= -1
+                ball.direction.y *= -1
 
     def add(self, x: float):
         self.u.x += x
+
+    def check_collision(self, ball: Ball) -> bool:
+        center1 = pyray.Vector2(ball.position.x, ball.position.y)
+        return pyray.check_collision_circle_rec(center1, ball.radius,
+                                                pyray.Rectangle(self.position.x, self.position.y, 200, 30))
 
 
 def main():
     pyray.init_window(1000, 1000, "Task-1")
     pyray.set_target_fps(60)
+    platform = Platform()
     for i in range(30):
         balls.append(
             Ball('basketball.png', position=pyray.Vector2(random.randint(0, 900), random.randint(0, 900)),
@@ -94,9 +105,19 @@ def main():
     while not pyray.window_should_close():
         pyray.begin_drawing()
         pyray.clear_background(colors.BLACK)
+
+        if pyray.is_key_down(pyray.KeyboardKey.KEY_D):
+            platform.add(1)
+        if pyray.is_key_down(pyray.KeyboardKey.KEY_A):
+            platform.add(-1)
+        platform.tick()
+
         for ball in balls:
             ball.move()
             ball.draw()
+
+        platform.draw()
+
         pyray.end_drawing()
     pyray.close_window()
 
