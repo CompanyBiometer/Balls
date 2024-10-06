@@ -69,12 +69,18 @@ class Platform:
 def main():
     pyray.init_window(800, 600, "Task-1")
     pyray.set_target_fps(60)
-    ball = Ball('basketball.png')
+    ball1 = Ball('basketball.png', position=pyray.Vector2(100, 300),
+                 direction=pyray.Vector2(2, 0))
+    ball2 = Ball('basketball.png', position=pyray.Vector2(500, 300),
+                 direction=pyray.Vector2(-2, 0))
     while not pyray.window_should_close():
         pyray.begin_drawing()
         pyray.clear_background(colors.BLACK)
-        ball.move()
-        ball.draw()
+        ball1.move()
+        ball2.move()
+
+        ball1.draw()
+        ball2.draw()
         pyray.end_drawing()
     pyray.close_window()
 
