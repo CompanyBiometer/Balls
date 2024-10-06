@@ -18,6 +18,8 @@ class Ball:
     def __init__(self, source: str, position: Vec = Vec(0, 0), direction: Vec = Vec(4, 4)):
         img = pyray.load_image(source)
         self.texture = pyray.load_texture_from_image(img)
+        self.texture.width = 30
+        self.texture.height = 30
         self.direction = direction
         self.position = position
         pyray.unload_image(img)
