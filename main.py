@@ -1,3 +1,5 @@
+import random
+
 import pyray
 from raylib import colors
 
@@ -29,11 +31,11 @@ class Ball:
         self.position.y += self.direction.y
         if self.position.x <= 0:
             self.direction.x *= -1
-        if self.position.x >= 800 - self.texture.width:
+        if self.position.x >= 1000 - self.texture.width:
             self.direction.x *= -1
         if self.position.y <= 0:
             self.direction.y *= -1
-        if self.position.y >= 600 - self.texture.height:
+        if self.position.y >= 1000 - self.texture.height:
             self.direction.y *= -1
 
         for ball in balls:
@@ -80,23 +82,21 @@ class Platform:
 
 
 def main():
-    pyray.init_window(800, 600, "Task-1")
+    pyray.init_window(1000, 1000, "Task-1")
     pyray.set_target_fps(60)
-    ball1 = Ball('basketball.png', position=pyray.Vector2(100, 100),
-                 direction=pyray.Vector2(1, 3))
-    ball2 = Ball('basketball.png', position=pyray.Vector2(200, 300),
-                 direction=pyray.Vector2(-1, -3))
+    for i in range(30):
+        balls.append(
+            Ball('basketball.png', position=pyray.Vector2(random.randint(0, 900), random.randint(0, 900)),
+                 direction=pyray.Vector2(random.randint(100, 400) * random.choice([1, -1]) / 100,
+                                         random.randint(100, 400) * random.choice([1, -1]) / 100))
+        )
 
-    balls.append(ball1)
-    balls.append(ball2)
     while not pyray.window_should_close():
         pyray.begin_drawing()
         pyray.clear_background(colors.BLACK)
-        ball1.move()
-        ball2.move()
-
-        ball1.draw()
-        ball2.draw()
+        for ball in balls:
+            ball.move()
+            ball.draw()
         pyray.end_drawing()
     pyray.close_window()
 
