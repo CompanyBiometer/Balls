@@ -2,18 +2,6 @@ import pyray
 from raylib import colors
 
 
-class Vec:
-    def __init__(self, x: float, y: float):
-        self.x = x
-        self.y = y
-
-    def block_x(self):
-        return int(self.x)
-
-    def block_y(self):
-        return int(self.y)
-
-
 class Ball:
     def __init__(self, source: str, position: pyray.Vector2 = pyray.Vector2(0, 0),
                  direction: pyray.Vector2 = None,
@@ -48,14 +36,14 @@ class Ball:
 
 
 class Platform:
-    def __init__(self, position: Vec = Vec(100, 500)):
+    def __init__(self, position: pyray.Vector2 = pyray.Vector2(500, 500)):
         self.position = position
-        self.u = Vec(0, 0)
+        self.u = pyray.Vector2(0, 0)
 
-    def draw(self, v: Vec = None):
+    def draw(self, v: pyray.Vector2 = None):
         if v is None:
             v = self.position
-        pyray.draw_rectangle(v.block_x(), v.block_y(), 200, 30, colors.RED)
+        pyray.draw_rectangle(int(v.x), int(v.y), 200, 30, colors.RED)
 
     def tick(self):
         if self.u.x > 0:
