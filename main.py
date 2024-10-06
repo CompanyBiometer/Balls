@@ -96,8 +96,16 @@ def main():
     pyray.set_target_fps(60)
     platform = Platform()
     for i in range(30):
+        new_pos = pyray.Vector2(random.randint(0, 900), random.randint(0, 900))
+        ok = True
+        while not ok:
+            new_pos = pyray.Vector2(random.randint(0, 900), random.randint(0, 900))
+            for ball in balls:
+                if pyray.check_collision_circles(ball.position, 80, new_pos, 80):
+                    ok = False
+                    break
         balls.append(
-            Ball('basketball.png', position=pyray.Vector2(random.randint(0, 900), random.randint(0, 900)),
+            Ball('basketball.png', position=new_pos,
                  direction=pyray.Vector2(random.randint(100, 400) * random.choice([1, -1]) / 100,
                                          random.randint(100, 400) * random.choice([1, -1]) / 100))
         )
