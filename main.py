@@ -1,6 +1,8 @@
 import pyray
 from raylib import colors
 
+balls = []
+
 
 class Ball:
     def __init__(self, source: str, position: pyray.Vector2 = pyray.Vector2(0, 0),
@@ -8,8 +10,8 @@ class Ball:
                  radius: int = 30):
         img = pyray.load_image(source)
         self.texture = pyray.load_texture_from_image(img)
-        self.texture.width = radius
-        self.texture.height = radius
+        self.texture.width = radius * 2
+        self.texture.height = radius * 2
         self.direction = direction
         if direction is None:
             self.direction = pyray.Vector2(4, 4)
@@ -33,6 +35,11 @@ class Ball:
             self.direction.y *= -1
         if self.position.y >= 600 - self.texture.height:
             self.direction.y *= -1
+
+        for ball in balls:
+            if ball.position != self.position:
+                if check_collision(self, ball):
+                    self.direction, ball.direction = ball.direction, self.direction
 
 
 def check_collision(ball1: Ball, ball2: Ball) -> bool:
@@ -75,10 +82,13 @@ class Platform:
 def main():
     pyray.init_window(800, 600, "Task-1")
     pyray.set_target_fps(60)
-    ball1 = Ball('basketball.png', position=pyray.Vector2(100, 300),
-                 direction=pyray.Vector2(2, 0))
-    ball2 = Ball('basketball.png', position=pyray.Vector2(500, 300),
-                 direction=pyray.Vector2(-2, 0))
+    ball1 = Ball('basketball.png', position=pyray.Vector2(100, 100),
+                 direction=pyray.Vector2(1, 3))
+    ball2 = Ball('basketball.png', position=pyray.Vector2(200, 300),
+                 direction=pyray.Vector2(-1, -3))
+
+    balls.append(ball1)
+    balls.append(ball2)
     while not pyray.window_should_close():
         pyray.begin_drawing()
         pyray.clear_background(colors.BLACK)
