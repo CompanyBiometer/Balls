@@ -24,7 +24,7 @@ class Ball:
     def draw(self, v: pyray.Vector2 = None):
         if v is None:
             v = self.position
-        pyray.draw_texture(self.texture, int(v.x), int(v.y), colors.WHITE)
+        pyray.draw_texture(self.texture, int(v.x), int(v.y) - 15, colors.WHITE)
 
     def move(self):
         self.position.x += self.direction.x
