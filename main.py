@@ -102,6 +102,7 @@ class Platform:
 
 
 def main():
+
     pyray.init_window(WIDTH, HEIGHT, "Balls")
     pyray.set_target_fps(60)
     platform = Platform()
@@ -133,7 +134,12 @@ def main():
 
         for ball in balls:
             if ball.move():
-                print("ok")
+                font = pyray.load_font_ex("Swanston.ttf", 68, None, 0)
+                while not pyray.window_should_close():
+                    pyray.draw_text_ex(font, 'Game Over',
+                                       pyray.Vector2(HEIGHT / 2, WIDTH / 2), 68, 1,
+                                       colors.WHITE)
+
             ball.draw()
 
         platform.draw()
