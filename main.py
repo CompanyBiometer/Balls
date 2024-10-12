@@ -6,6 +6,8 @@ from raylib import colors
 WIDTH = 800
 HEIGHT = 800
 
+game_over = False
+
 balls = []
 
 
@@ -29,7 +31,7 @@ class Ball:
             v = self.position
         pyray.draw_texture(self.texture, int(v.x), int(v.y) - 15, colors.WHITE)
 
-    def move(self):
+    def move(self) -> bool:
         self.position.x += self.direction.x
         self.position.y += self.direction.y
         if self.position.x <= 0:
@@ -45,6 +47,11 @@ class Ball:
             if ball.position != self.position:
                 if check_collision(self, ball):
                     self.direction, ball.direction = ball.direction, self.direction
+
+            if ball.position.y >= HEIGHT - 100:
+                return True
+
+        return False
 
 
 def check_collision(ball1: Ball, ball2: Ball) -> bool:
@@ -125,7 +132,8 @@ def main():
         platform.tick()
 
         for ball in balls:
-            ball.move()
+            if ball.move():
+                print("ok")
             ball.draw()
 
         platform.draw()
