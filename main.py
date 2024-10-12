@@ -98,7 +98,7 @@ def main():
     pyray.init_window(WIDTH, HEIGHT, "Balls")
     pyray.set_target_fps(60)
     platform = Platform()
-    for i in range(30):
+    for i in range(1):
         new_pos = pyray.Vector2(random.randint(0, WIDTH - 100), random.randint(0, HEIGHT - 100))
         ok = True
         while not ok:
