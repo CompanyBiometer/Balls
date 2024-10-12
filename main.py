@@ -3,6 +3,9 @@ import random
 import pyray
 from raylib import colors
 
+WIDTH = 800
+HEIGHT = 800
+
 balls = []
 
 
@@ -31,11 +34,11 @@ class Ball:
         self.position.y += self.direction.y
         if self.position.x <= 0:
             self.direction.x *= -1
-        if self.position.x >= 1000 - self.texture.width:
+        if self.position.x >= WIDTH - self.texture.width:
             self.direction.x *= -1
         if self.position.y <= 0:
             self.direction.y *= -1
-        if self.position.y >= 1000 - self.texture.height:
+        if self.position.y >= HEIGHT - self.texture.height:
             self.direction.y *= -1
 
         for ball in balls:
@@ -73,8 +76,8 @@ class Platform:
         if self.position.x <= 0:
             self.position.x = 0
             self.u.x *= -.7
-        if self.position.x >= 800:
-            self.position.x = 800
+        if self.position.x >= WIDTH - 200:
+            self.position.x = WIDTH - 200
             self.u.x *= -.7
 
         for ball in balls:
@@ -92,14 +95,14 @@ class Platform:
 
 
 def main():
-    pyray.init_window(1000, 1000, "Task-1")
+    pyray.init_window(WIDTH, HEIGHT, "Balls")
     pyray.set_target_fps(60)
     platform = Platform()
     for i in range(30):
-        new_pos = pyray.Vector2(random.randint(0, 900), random.randint(0, 900))
+        new_pos = pyray.Vector2(random.randint(0, WIDTH - 100), random.randint(0, HEIGHT - 100))
         ok = True
         while not ok:
-            new_pos = pyray.Vector2(random.randint(0, 900), random.randint(0, 900))
+            new_pos = pyray.Vector2(random.randint(0, WIDTH - 100), random.randint(0, HEIGHT - 100))
             for ball in balls:
                 if pyray.check_collision_circles(ball.position, 80, new_pos, 80):
                     ok = False
