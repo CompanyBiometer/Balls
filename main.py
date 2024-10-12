@@ -104,7 +104,8 @@ def main():
         while not ok:
             new_pos = pyray.Vector2(random.randint(0, WIDTH - 100), random.randint(0, HEIGHT - 100))
             for ball in balls:
-                if pyray.check_collision_circles(ball.position, 80, new_pos, 80):
+                if (pyray.check_collision_circles(ball.position, 80, new_pos, 80)
+                        and new_pos.y < 200):
                     ok = False
                     break
         balls.append(
